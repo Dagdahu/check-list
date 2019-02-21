@@ -1,0 +1,120 @@
+import React from 'react';
+
+class SignIn extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+            alert: ''
+        }
+    }
+
+    onInputChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
+    wrongForm = (newAlert) => {
+        this.setState({
+            alert: newAlert,
+            password:''
+        })
+    }
+
+    onSubmitSignIn = () => {
+        const {email, password} = this.state;
+        /// Check for blank input
+        if (!email || !password) {
+            this.wrongForm('Please fill up all the fields to register.');
+        }
+        else {
+            this.props.onRouteChange('user', 'LOGIN');
+        }
+        // else {
+        //     fetch(serverBaseUrl + '/signin', {
+        //         method:'post',
+        //         headers: {
+        //             'Content-Type' : 'application/json'
+        //         },
+        //         body: JSON.stringify({
+        //             email: this.state.email,
+        //             password: this.state.password
+        //         })
+        //     })  
+        //     .then(response => response.json())
+        //     .then(user => {
+        //         if (user.id) {
+        //             this.props.loadUser(user);
+        //             this.props.onRouteChange('home')
+        //         }
+        //         else {
+        //             this.wrongForm('Wrong email/password combination.');
+        //         }
+        //     })
+        // }
+    }
+
+    render() {
+        const {onRouteChange} = this.props;
+        return (
+            <div>
+                <article className="ba bw2 br3 bg-white dark-gray b--black-20 mv4 w-50-m w-25-l mw5 center">
+                    <main className="pa4 black-80">
+                        <div className="measure center">
+                            <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
+                                <legend className="f4 fw6 ph0 mh0">Sign In</legend>
+                                <div className="mt3">
+                                    <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
+                                    <input 
+                                        className="pa2 input-reset ba bw1 b--black-20 bg-transparent hover-bg-light-gray w-100"
+                                        type="email" 
+                                        name="email"  
+                                        id="email-address"
+                                        value={this.state.email}
+                                        onChange={this.onInputChange} 
+                                    />
+                                </div>
+                                <div className="mv3">
+                                    <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
+                                    <input 
+                                        className="b pa2 input-reset ba bw1 b--black-20 bg-transparent hover-bg-light-gray w-100" 
+                                        type="password" 
+                                        name="password" 
+                                        id="password"
+                                        value={this.state.password}
+                                        onChange={this.onInputChange}
+                                    />
+                                </div>
+                            </fieldset>
+                            <div className="b dark-red f6">
+                                <p>{this.state.alert}</p>
+                            </div>
+                            <div className="tc">
+                                <input 
+                                    className="b ba bw1 br2 ph3 pv2 input-reset ba b--black bg-transparent pointer f6 dim" 
+                                    type="submit" 
+                                    value="Sign in"
+                                    onClick={this.onSubmitSignIn}
+                                />
+                            </div>
+                        </div>
+                        <hr />
+                        <h3 className="tc">
+                            New user ?
+                        </h3>
+                        <div 
+                            className="b ba bw1 br2 pv2 tc pointer f6 dim"
+                            onClick={() => onRouteChange('register')}
+                        >
+                            Create an account
+                        </div>
+                    </main>
+                </article>
+            </div>
+        );
+    }
+}
+
+export default SignIn;
