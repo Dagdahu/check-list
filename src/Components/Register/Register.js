@@ -75,6 +75,10 @@ class Register extends React.Component {
                     this.wrongForm('Wrong email/password combination.');
                 }
             })
+            .catch(err => {
+                this.wrongForm('An error has occured, please try again later.');
+                console.log(err)
+            })
         }
     }
 

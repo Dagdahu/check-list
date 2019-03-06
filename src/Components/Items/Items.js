@@ -26,13 +26,10 @@ const Items = ({listName, itemsArray, itemClicked, onRouteChange, onDeleteList})
             /// Wait for the item to stop being clicked for .5s before fetching
             clearTimeout(timers[target.id]);
             timers[target.id] = setTimeout(() => {
-                console.log('item clicked, enable :', target.checked ? 0 : 1)
                 itemClicked(target.id, target.checked ? 0 : 1);
             }, 500)
         }
     }
-
-    console.log(itemsArray);
 
     return (
         <div className='pa2'>

@@ -336,7 +336,6 @@ class Lists extends React.Component {
         })
         .then(response => response.json())
         .then(response => {
-            console.log(response);
             if(!response.id) {
                 console.log('Failed to update item from list');
             }
