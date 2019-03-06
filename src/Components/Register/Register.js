@@ -1,4 +1,5 @@
 import React from 'react';
+import { serverBaseUrl } from '../../Constants.js';
 
 const checkEmail = (email) => {
     const mailRegex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
@@ -54,37 +55,33 @@ class Register extends React.Component {
             this.wrongForm('Passwords do not match.');
         }
         else {
-            this.props.onRouteChange('user', 'LOGIN');
+            fetch(serverBaseUrl + '/register', {
+                method:'post',
+                headers: {
+                    'Content-Type' : 'application/json'
+                },
+                body: JSON.stringify({
+                    name: this.state.name,
+                    email: this.state.email,
+                    password: this.state.password
+                })
+            })  
+            .then(response => response.json())
+            .then(user => {
+                if (user.id) {
+                    this.props.loadUser(user);
+                }
+                else {
+                    this.wrongForm('Wrong email/password combination.');
+                }
+            })
         }
-        // else {
-        //     fetch(serverBaseUrl + '/signin', {
-        //         method:'post',
-        //         headers: {
-        //             'Content-Type' : 'application/json'
-        //         },
-        //         body: JSON.stringify({
-        //             email: this.state.email,
-        //             password: this.state.password
-        //         })
-        //     })  
-        //     .then(response => response.json())
-        //     .then(user => {
-        //         if (user.id) {
-        //             this.props.loadUser(user);
-        //             this.props.onRouteChange('home')
-        //         }
-        //         else {
-        //             this.wrongForm('Wrong email/password combination.');
-        //         }
-        //     })
-        // }
     }
 
     render() {
-        // const {onRouteChange} = this.props;
         return (
             <div>
-                <article className="ba bw2 br3 bg-white dark-gray b--black-20 mv4 w-50-m w-25-l mw6 center">
+                <article className="ba bw2 br3 bg-white dark-gray b--black-20 mv4 w-40-l w-60-m w-90 center">
                     <main className="pa4 black-80">
                         <div className="measure center">
                             <fieldset id="sign_up" className="ba b--transparent ph0 mh0">

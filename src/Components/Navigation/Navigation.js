@@ -19,7 +19,7 @@ const Navigation = ({onRouteChange, isSignedIn}) => {
                         <h4
                             className="link dim dib pa2 ba bw1 br-pill button normal"
                             title="Log out"
-                            onClick={() => onRouteChange('home', 'LOGOUT')}
+                            onClick={() => onRouteChange('home', 'logout')}
                         >
                             Log out
                         </h4>

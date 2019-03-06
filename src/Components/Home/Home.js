@@ -20,15 +20,18 @@ const Home = ({onRouteChange, isSignedIn}) => {
                 Start now !
             </div>
             <div className='center'>
-                <ul className='tl'>
+                <ul className='tl gray'>
                     <li>
-                        Create multiple lists
+                        Create multiple lists.
                     </li>
                     <li>
-                        Retrieve your commonly purchased items
+                        Check purchased items.
                     </li>
                     <li>
-                        It's all on your phone 
+                        Retrieve your commonly purchased items.
+                    </li>
+                    <li>
+                        It's all on your phone !
                     </li>
                 </ul>
             </div>

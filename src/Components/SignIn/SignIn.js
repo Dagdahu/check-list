@@ -1,4 +1,5 @@
 import React from 'react';
+import { serverBaseUrl } from '../../Constants.js';
 
 class SignIn extends React.Component {
     constructor(props) {
@@ -30,37 +31,33 @@ class SignIn extends React.Component {
             this.wrongForm('Please fill up all the fields to register.');
         }
         else {
-            this.props.onRouteChange('user', 'LOGIN');
+            fetch(serverBaseUrl + '/signin', {
+                method:'post',
+                headers: {
+                    'Content-Type' : 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            })  
+            .then(response => response.json())
+            .then(user => {
+                if (user.id) {
+                    this.props.loadUser(user);
+                }
+                else {
+                    this.wrongForm('Wrong email/password combination.');
+                }
+            })
         }
-        // else {
-        //     fetch(serverBaseUrl + '/signin', {
-        //         method:'post',
-        //         headers: {
-        //             'Content-Type' : 'application/json'
-        //         },
-        //         body: JSON.stringify({
-        //             email: this.state.email,
-        //             password: this.state.password
-        //         })
-        //     })  
-        //     .then(response => response.json())
-        //     .then(user => {
-        //         if (user.id) {
-        //             this.props.loadUser(user);
-        //             this.props.onRouteChange('home')
-        //         }
-        //         else {
-        //             this.wrongForm('Wrong email/password combination.');
-        //         }
-        //     })
-        // }
     }
 
     render() {
         const {onRouteChange} = this.props;
         return (
             <div>
-                <article className="ba bw2 br3 bg-white dark-gray b--black-20 mv4 w-50-m w-25-l mw5 center">
+                <article className="ba bw2 br3 mv4 w-40-l w-60-m w-90 bg-white dark-gray b--black-20 center">
                     <main className="pa4 black-80">
                         <div className="measure center">
                             <fieldset id="sign_up" className="ba b--transparent ph0 mh0">

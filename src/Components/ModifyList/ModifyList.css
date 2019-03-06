@@ -1,0 +1,11 @@
+.item {
+    opacity:0.7;
+    transition: opacity .15s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.item:hover,
+.item:focus {
+    transition: opacity .15s ease-in;
+    opacity: 1;
+}

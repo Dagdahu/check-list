@@ -5,53 +5,30 @@ import Home from './Components/Home/Home';
 import SignIn from './Components/SignIn/SignIn';
 import Register from './Components/Register/Register';
 import Lists from './Components/Lists/Lists';
+/// Other
+import { serverBaseUrl } from './Constants.js';
 
 const initialState = {
-  route : 'user',
-  isSignedIn: true,
+  route : 'home',
+  isSignedIn: false,
   user: {
-    id : '123',
-    name: 'John',
-    email: 'john@gmail.com'
+    id : '',
+    name: '',
+    email: '',
+    lists: []
   }
 }
 
-const shoppingList = [
-  {
-    name: 'Gateau au chocolat',
-    items: [
-      {
-        name: 'farine',
-        enable: true
-      },
-      {
-        name: 'oeufs',
-        enable: true
-      },
-      {
-        name: 'chocolat',
-        enable: false
-      }
-    ]
-  },
-  {
-    name: 'Vaisselle',
-    items: [
-      {
-        name: 'liquide vaisselle',
-        enable: true
-      },
-      {
-        name: 'éponge',
-        enable: true
-      }
-    ]
-  },
-  {
-    name: 'Pas d\'articles',
-    items:[]
-  }
-];
+// const initialStateDev = {
+//   route : 'user',
+//   isSignedIn: true,
+//   user: {
+//     id : '9',
+//     name: 'Hugo',
+//     email: 'chatelhugo@hotmail.fr',
+//     lists: []
+//   }
+// }
 
 class App extends Component {
   constructor (props) {
@@ -59,11 +36,32 @@ class App extends Component {
     this.state = initialState;
   }
 
+  loadUser = (newUser) => {
+    fetch(serverBaseUrl + '/lists/' + newUser.id, {
+      method:'get'
+    })
+      .then(response => response.json())
+      .then(response => {
+        if (response === 'Not found') {
+          response = [];
+        }
+        this.setState({
+          user: {
+            id : newUser.id,
+            name: newUser.name,
+            email: newUser.email,
+            lists: response
+          }
+        })
+        this.onRouteChange('user', 'login')
+      })
+  }
+
   onRouteChange = (newRoute, userLog = '') => {
-    if (userLog === 'LOGIN') {
+    if (userLog === 'login') {
       this.setState({isSignedIn:true})
     }
-    else if (userLog === 'LOGOUT') {
+    else if (userLog === 'logout') {
       this.setState(initialState);
     }
     this.setState({route:newRoute});
@@ -79,18 +77,19 @@ class App extends Component {
         {
           this.state.route === 'user' ?
             <Lists 
-              username={this.state.user.name}
-              listArray={shoppingList}
+              user={this.state.user}
             />
             :
             this.state.route === 'signin' ?
               <SignIn 
                 onRouteChange={this.onRouteChange}
+                loadUser={this.loadUser}
               />
               :
               this.state.route === 'register' ?
                 <Register 
                   onRouteChange={this.onRouteChange}
+                  loadUser={this.loadUser}
                 />
                 :
                 <Home 
