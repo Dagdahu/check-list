@@ -17,6 +17,13 @@ class SignIn extends React.Component {
         })
     }
 
+    onKeyPressed = (event) => {
+        const keyCode = event.keyCode || event.which;
+        if(keyCode === 13) {
+            this.onSubmitSignIn();
+        }  
+    }
+
     wrongForm = (newAlert) => {
         this.setState({
             alert: newAlert,
@@ -75,7 +82,8 @@ class SignIn extends React.Component {
                                         id="email-address"
                                         maxLength='256'
                                         value={this.state.email}
-                                        onChange={this.onInputChange} 
+                                        onChange={this.onInputChange}
+                                        onKeyPress={this.onKeyPressed}
                                     />
                                 </div>
                                 <div className="mv3">
@@ -88,6 +96,7 @@ class SignIn extends React.Component {
                                         maxLength='64'
                                         value={this.state.password}
                                         onChange={this.onInputChange}
+                                        onKeyPress={(event) => this.onKeyPressed(event)}
                                     />
                                 </div>
                             </fieldset>

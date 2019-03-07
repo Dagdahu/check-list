@@ -12,6 +12,7 @@ class ModifyList extends React.Component {
         })
         const commonItems = this.props.commonItems.map(item => {
             item.inList = Boolean(this.props.itemsArray.find(i => i.id === item.id));
+            item.enable = true;
             return item;
         })
 
@@ -82,6 +83,13 @@ class ModifyList extends React.Component {
  
     onInputChange = (target) => {
         this.setState({[target.name]:target.value});
+    }
+
+    onKeyPressed = (event) => {
+        const keyCode = event.keyCode || event.which;
+        if(keyCode === 13) {
+            this.onAddItem();
+        }  
     }
 
     onAddItem = () => {
@@ -203,11 +211,12 @@ class ModifyList extends React.Component {
                             <input 
                                 type='search'
                                 name='searchField'
-                                placeholder='Search'
+                                placeholder='Search and Add'
                                 className='dtc tc w-90'
                                 maxLength='64'
                                 value={this.state.searchField}
                                 onChange={(e) => this.onInputChange(e.target)}
+                                onKeyPress={(e) => this.onKeyPressed(e)}
                             />
                             <div 
                                 className='dtc link dim button ba bw1 br-pill ma5 pv2 ph3 blue'

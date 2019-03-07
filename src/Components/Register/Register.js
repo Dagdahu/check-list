@@ -24,6 +24,13 @@ class Register extends React.Component {
         })
     }
 
+    onKeyPressed = (event) => {
+        const keyCode = event.keyCode || event.which;
+        if(keyCode === 13) {
+            this.onSubmitSignIn();
+        }  
+    }
+
     wrongForm = (newAlert) => {
         this.setState({
             alert: newAlert,
@@ -136,6 +143,7 @@ class Register extends React.Component {
                                         id="password2"
                                         value={this.state.password2}
                                         onChange={this.onInputChange}
+                                        onKeyPress={(e) => this.onKeyPressed(e)}
                                     />
                                 </div>
                             </form>
