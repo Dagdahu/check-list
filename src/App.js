@@ -5,8 +5,10 @@ import Home from './Components/Home/Home';
 import SignIn from './Components/SignIn/SignIn';
 import Register from './Components/Register/Register';
 import Lists from './Components/Lists/Lists';
+import Footer from './Components/Footer/Footer';
 /// Other
 import { serverBaseUrl } from './Constants.js';
+import './App.css';
 
 const initialState = {
   route : 'home',
@@ -18,17 +20,6 @@ const initialState = {
     lists: []
   }
 }
-
-// const initialStateDev = {
-//   route : 'user',
-//   isSignedIn: true,
-//   user: {
-//     id : '9',
-//     name: 'Hugo',
-//     email: 'chatelhugo@hotmail.fr',
-//     lists: []
-//   }
-// }
 
 class App extends Component {
   constructor (props) {
@@ -70,33 +61,36 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navigation 
-          onRouteChange={this.onRouteChange}
-          isSignedIn={this.state.isSignedIn}
-        />
-        {
-          this.state.route === 'user' ?
-            <Lists 
-              user={this.state.user}
-            />
-            :
-            this.state.route === 'signin' ?
-              <SignIn 
-                onRouteChange={this.onRouteChange}
-                loadUser={this.loadUser}
+        <div className="content">
+          <Navigation 
+            onRouteChange={this.onRouteChange}
+            isSignedIn={this.state.isSignedIn}
+          />
+          {
+            this.state.route === 'user' ?
+              <Lists 
+                user={this.state.user}
               />
               :
-              this.state.route === 'register' ?
-                <Register 
+              this.state.route === 'signin' ?
+                <SignIn 
                   onRouteChange={this.onRouteChange}
                   loadUser={this.loadUser}
                 />
                 :
-                <Home 
-                  onRouteChange={this.onRouteChange}
-                  isSignedIn={this.state.isSignedIn}
-                />
-        }
+                this.state.route === 'register' ?
+                  <Register 
+                    onRouteChange={this.onRouteChange}
+                    loadUser={this.loadUser}
+                  />
+                  :
+                  <Home 
+                    onRouteChange={this.onRouteChange}
+                    isSignedIn={this.state.isSignedIn}
+                  />
+          }
+        </div>
+        <Footer />
       </div>
     );
   }

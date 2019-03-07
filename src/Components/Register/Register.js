@@ -86,16 +86,17 @@ class Register extends React.Component {
         return (
             <div>
                 <article className="ba bw2 br3 bg-white dark-gray b--black-20 mv4 w-40-l w-60-m w-90 center">
-                    <main className="pa4 black-80">
-                        <div className="measure center">
-                            <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
+                    <main className="black-80">
+                        <div className="center pa4">
+                            <form id="sign_up" className="ph0 b--transparent">
                                 <legend className="f4 fw6 ph0 mh0">Create your account</legend>
-                                <div className="mt3">
+                                <div className="mv3">
                                     <label className="db fw6 lh-copy f6" htmlFor="name">Name</label>
                                     <input 
-                                        className="pa2 input-reset ba bw1 b--black-20 bg-transparent hover-bg-light-gray w-100"
+                                        className="pa2 ba bw1 br2 b--black-20 bg-transparent hover-bg-light-gray w-100 border-box"
                                         type="name" 
-                                        name="name"  
+                                        name="name"
+                                        maxLength='64'
                                         id="name"
                                         value={this.state.name}
                                         onChange={this.onInputChange} 
@@ -104,9 +105,10 @@ class Register extends React.Component {
                                 <div className="mv3">
                                     <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
                                     <input 
-                                        className="pa2 input-reset ba bw1 b--black-20 bg-transparent hover-bg-light-gray w-100"
+                                        className="pa2 ba bw1 br2 b--black-20 bg-transparent hover-bg-light-gray w-100"
                                         type="email" 
-                                        name="email"  
+                                        name="email"
+                                        maxLength="256"
                                         id="email-address"
                                         value={this.state.email}
                                         onChange={this.onInputChange} 
@@ -115,9 +117,10 @@ class Register extends React.Component {
                                 <div className="mv3">
                                     <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
                                     <input 
-                                        className="b pa2 input-reset ba bw1 b--black-20 bg-transparent hover-bg-light-gray w-100" 
+                                        className="b pa2 ba bw1 br2 b--black-20 bg-transparent hover-bg-light-gray w-100" 
                                         type="password" 
-                                        name="password" 
+                                        name="password"
+                                        maxLength='64'
                                         id="password"
                                         value={this.state.password}
                                         onChange={this.onInputChange}
@@ -126,21 +129,22 @@ class Register extends React.Component {
                                 <div className="mv3">
                                     <label className="db fw6 lh-copy f6" htmlFor="password2">Confirm password</label>
                                     <input 
-                                        className="b pa2 input-reset ba bw1 b--black-20 bg-transparent hover-bg-light-gray w-100" 
+                                        className="b pa2 ba bw1 br2 b--black-20 bg-transparent hover-bg-light-gray w-100" 
                                         type="password" 
-                                        name="password2" 
+                                        name="password2"
+                                        maxLength='64'
                                         id="password2"
                                         value={this.state.password2}
                                         onChange={this.onInputChange}
                                     />
                                 </div>
-                            </fieldset>
-                            <div className="b dark-red f6">
+                            </form>
+                            <div className="b tc red f6">
                                 <p>{this.state.alert}</p>
                             </div>
                             <div className="tc">
                                 <input 
-                                    className="b ba bw1 br2 ph3 pv2 input-reset ba b--black bg-transparent pointer f6 dim" 
+                                    className="b ba bw1 br2 ph3 pv2 ba b--black bg-transparent pointer f6 dim" 
                                     type="submit" 
                                     value="Register"
                                     onClick={this.onSubmitRegister}

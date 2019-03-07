@@ -21,16 +21,16 @@ const Home = ({onRouteChange, isSignedIn}) => {
             </div>
             <div className='center'>
                 <ul className='tl gray'>
-                    <li>
+                    <li className='hover-black'>
                         Create multiple lists.
                     </li>
-                    <li>
+                    <li className='hover-black'>
                         Check purchased items.
                     </li>
-                    <li>
+                    <li className='hover-black'>
                         Retrieve your commonly purchased items.
                     </li>
-                    <li>
+                    <li className='hover-black'>
                         It's all on your phone !
                     </li>
                 </ul>
