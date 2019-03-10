@@ -15,6 +15,7 @@ class ModifyList extends React.Component {
             item.enable = true;
             return item;
         })
+        
 
         this.state = {
             listName: this.props.modifiedList.name,
