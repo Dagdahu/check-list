@@ -1,11 +1,16 @@
+.list {
+    --trans-time: 0.15s;
+}
+
 .item {
     opacity:0.7;
-    transition: opacity .15s ease-in-out;
-    transition: all .2s ease-in-out;
+    -webkit-transition: all var(--trans-time) ease-in;
+    -moz-transition: all var(--trans-time) ease-in;
+    -o-transition: all var(--trans-time) ease-in;
+    transition: all var(--trans-time) ease-in;
 }
 
 .item:hover,
 .item:focus {
-    transition: opacity .15s ease-in;
     opacity: 1;
 }

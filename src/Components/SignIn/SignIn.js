@@ -1,5 +1,6 @@
 import React from 'react';
 import { serverBaseUrl } from '../../Constants.js';
+import Loading from '../Loading/Loading';
 
 class SignIn extends React.Component {
     constructor(props) {
@@ -7,7 +8,8 @@ class SignIn extends React.Component {
         this.state = {
             email: '',
             password: '',
-            alert: ''
+            alert: '',
+            isLoading: false
         }
     }
 
@@ -27,12 +29,17 @@ class SignIn extends React.Component {
     wrongForm = (newAlert) => {
         this.setState({
             alert: newAlert,
-            password:''
+            password:'',
+            isLoading: false
         })
     }
 
     onSubmitSignIn = () => {
         const {email, password} = this.state;
+        this.setState({
+            alert:'',
+            isLoading: true
+        });
         /// Check for blank input
         if (!email || !password) {
             this.wrongForm('Please fill up all the fields to register.');
@@ -86,13 +93,14 @@ class SignIn extends React.Component {
                                         onKeyPress={this.onKeyPressed}
                                     />
                                 </div>
-                                <div className="mv3">
+                                <div className="mt3">
                                     <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
                                     <input 
                                         className="b pa2 br2 ba bw1 b--black-20 bg-transparent hover-bg-light-gray w-100" 
                                         type="password" 
                                         name="password" 
                                         id="password"
+                                        minLength='8'
                                         maxLength='64'
                                         value={this.state.password}
                                         onChange={this.onInputChange}
@@ -100,8 +108,13 @@ class SignIn extends React.Component {
                                     />
                                 </div>
                             </fieldset>
-                            <div className="b dark-red f6">
-                                <p>{this.state.alert}</p>
+                            <div className="h2 mv3 tc">
+                                {this.state.alert &&
+                                    <div className="b dark-red f6 tl">
+                                        <p className="ma0">{this.state.alert}</p>
+                                    </div>
+                                }
+                                {this.state.isLoading && <Loading />}
                             </div>
                             <div className="tc">
                                 <input 

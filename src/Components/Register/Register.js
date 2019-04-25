@@ -1,5 +1,6 @@
 import React from 'react';
 import { serverBaseUrl } from '../../Constants.js';
+import Loading from '../Loading/Loading';
 
 const checkEmail = (email) => {
     const mailRegex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
@@ -14,7 +15,8 @@ class Register extends React.Component {
             email : '',
             password : '',
             password2 : '',
-            alert:''
+            alert:'',
+            isLoading: false
         }
     }
 
@@ -27,7 +29,7 @@ class Register extends React.Component {
     onKeyPressed = (event) => {
         const keyCode = event.keyCode || event.which;
         if(keyCode === 13) {
-            this.onSubmitSignIn();
+            this.onSubmitRegister();
         }  
     }
 
@@ -35,7 +37,8 @@ class Register extends React.Component {
         this.setState({
             alert: newAlert,
             password:'',
-            password2:''
+            password2:'',
+            isLoading: false
         })
     }
 
@@ -46,6 +49,10 @@ class Register extends React.Component {
             password,
             password2
         } = this.state;
+        this.setState({
+            alert:'',
+            isLoading: true
+        });
         /// Check for blank input
         if (!name || !email || !password || !password2) {
             this.wrongForm('Please fill up all the fields to register.');
@@ -79,7 +86,7 @@ class Register extends React.Component {
                     this.props.loadUser(user);
                 }
                 else {
-                    this.wrongForm('Wrong email/password combination.');
+                    this.wrongForm('An account already exists with this mail address.');
                 }
             })
             .catch(err => {
@@ -109,7 +116,7 @@ class Register extends React.Component {
                                         onChange={this.onInputChange} 
                                     />
                                 </div>
-                                <div className="mv3">
+                                <div className="mt3">
                                     <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
                                     <input 
                                         className="pa2 ba bw1 br2 b--black-20 bg-transparent hover-bg-light-gray w-100"
@@ -121,24 +128,26 @@ class Register extends React.Component {
                                         onChange={this.onInputChange} 
                                     />
                                 </div>
-                                <div className="mv3">
+                                <div className="mt3">
                                     <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
                                     <input 
                                         className="b pa2 ba bw1 br2 b--black-20 bg-transparent hover-bg-light-gray w-100" 
                                         type="password" 
                                         name="password"
+                                        minLength='8'
                                         maxLength='64'
                                         id="password"
                                         value={this.state.password}
                                         onChange={this.onInputChange}
                                     />
                                 </div>
-                                <div className="mv3">
+                                <div className="mt3">
                                     <label className="db fw6 lh-copy f6" htmlFor="password2">Confirm password</label>
                                     <input 
                                         className="b pa2 ba bw1 br2 b--black-20 bg-transparent hover-bg-light-gray w-100" 
                                         type="password" 
                                         name="password2"
+                                        minLength='8'
                                         maxLength='64'
                                         id="password2"
                                         value={this.state.password2}
@@ -147,8 +156,13 @@ class Register extends React.Component {
                                     />
                                 </div>
                             </form>
-                            <div className="b tc red f6">
-                                <p>{this.state.alert}</p>
+                            <div className="h2 mv3 tc">
+                                {this.state.alert &&
+                                    <div className="b dark-red f6 tl">
+                                        <p className="ma0">{this.state.alert}</p>
+                                    </div>
+                                }
+                                {this.state.isLoading && <Loading />}
                             </div>
                             <div className="tc">
                                 <input 

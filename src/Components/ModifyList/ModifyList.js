@@ -38,7 +38,7 @@ class ModifyList extends React.Component {
             itemsArray.length ?
             itemsArray.map(item =>
                     <li
-                        className='dt center link button item pa2 w-90'
+                        className='dt center button item pa2 w-90'
                         key={item.name}
                         id={item.name}
                     >
@@ -69,8 +69,8 @@ class ModifyList extends React.Component {
                                     </span>
                                 </span>
                                 :
-                                <span className='dtc tc w-10 ba bw1 br-pill pv1 ph3 b blue'>
-                                    -
+                                <span className='dtc tc w-10 ba bw1 br-pill pv1 ph3 b light-red'>
+                                    x
                                 </span>
                         }
                     </li>
@@ -185,7 +185,7 @@ class ModifyList extends React.Component {
     render() {
         const {listName, itemsArray, commonItems} = this.state;
         return (
-            <div className='dt'>
+            <div className='list dt'>
                 <div className='dtc list tc w-30-l w-40-m ph2 ph3-m ph4-l w-50'>
                     <div className='dt w-100'>
                         <h4 className='dtc tl mh2 dark-gray'>
